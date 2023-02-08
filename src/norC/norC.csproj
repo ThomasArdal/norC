@@ -1,7 +1,32 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+	  <Description>Get a CRON expression from a human-readable string</Description>
+	  <Authors>ThomasArdal</Authors>
+	  <TargetFramework>netstandard2.0</TargetFramework>
+	  <AssemblyName>norC</AssemblyName>
+	  <PackageId>norC</PackageId>
+	  <PackageTags>CRON;cronexpression;scheduling</PackageTags>
+	  <RepositoryUrl>https://github.com/ThomasArdal/norC</RepositoryUrl>
+	  <RepositoryType>git</RepositoryType>
+	  <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+	  <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+	  <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+	  <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
+	  <EnablePackageValidation>true</EnablePackageValidation>
+	  <!-- SourceLink -->
+	  <PublishRepositoryUrl>true</PublishRepositoryUrl>
+	  <EmbedUntrackedSources>true</EmbedUntrackedSources>
+	  <DebugType>embedded</DebugType>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+  </ItemGroup>
 
 </Project>
