@@ -16,4 +16,9 @@ dotnet add package norC --prerelease
 ```csharp
 CronExpression cron = Parser.Parse("Every day at 3 PM");
 Console.WriteLine(cron); // output: 0 15 * * *
+
+// or
+
+CronExpression cron = "Every month".AsCron();
+Console.WriteLine(cron); // output: 0 0 1 * *
 ```
