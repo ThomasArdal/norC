@@ -7,6 +7,7 @@
 		<AssemblyName>norC</AssemblyName>
 		<PackageId>norC</PackageId>
 		<PackageTags>CRON;cronexpression;scheduling</PackageTags>
+		<PackageIcon>icon.png</PackageIcon>
 		<RepositoryUrl>https://github.com/ThomasArdal/norC</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
@@ -30,6 +31,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Include="images\icon.png" Pack="true" PackagePath="\" />
 		<None Include="..\..\README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 
