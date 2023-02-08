@@ -1,10 +1,9 @@
 ﻿using NUnit.Framework;
-using norC;
 using System;
 
 namespace norC.Test
 {
-    public class ParserTest
+    public class CronExpressionTest
     {
         [TestCase("Every minute", "* * * * *")]
         [TestCase("Every 10 minutes", "*/10 * * * *")]
@@ -41,7 +40,13 @@ namespace norC.Test
         [TestCase("once", "* * * * *")]
         public void CanParse(string input, string expected)
         {
-            Assert.That(Parser.Parse(input).ToString(), Is.EqualTo(expected));
+            Assert.That(CronExpression.FromHumanString(input).ToString(), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void CanThrowExceptionOnNull()
+        {
+            Assert.Throws<ArgumentNullException>(() => CronExpression.FromHumanString(null));
         }
     }
 }

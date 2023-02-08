@@ -16,5 +16,10 @@
         {
             return $"{Minute} {Hour} {DayOfMonth} {Month} {DayOfWeek}";
         }
+
+        public static CronExpression FromHumanString(string str)
+        {
+            return Parser.Parse(str);
+        }
     }
 }

@@ -1,8 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace norC
 {
-    public class Parser
+    internal class Parser
     {
         const string every = "every";
         const string once = "once";
@@ -10,8 +11,10 @@ namespace norC
         const string each = "each";
         private static string[] wellKnownTerms = new[] { every, once, at, each };
 
-        public static CronExpression Parse(string input)
+        internal static CronExpression Parse(string input)
         {
+            if (string.IsNullOrWhiteSpace(input)) throw new ArgumentNullException(nameof(input));
+
             var cron = new CronExpression();
 
             var terms = input.ToLower().Split(' ');
