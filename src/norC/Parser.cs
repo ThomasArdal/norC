@@ -11,11 +11,12 @@ namespace norC
         const string each = "each";
         private static string[] wellKnownTerms = new[] { every, once, at, each };
 
-        internal static CronExpression Parse(string input)
+        internal static CronExpression Parse(string input, CronOptions options = null)
         {
             if (string.IsNullOrWhiteSpace(input)) throw new ArgumentNullException(nameof(input));
+            if (options == null) options = new CronOptions();
 
-            var cron = new CronExpression();
+            var cron = new CronExpression(options);
 
             var terms = input.ToLower().Split(' ');
 
@@ -54,12 +55,14 @@ namespace norC
                 nextterm = NextTerm(terms, counter);
                 if (nextterm == null || wellKnownTerms.Contains(nextterm) || nextterm == "am")
                 {
+                    cron.Second = "0";
                     cron.Minute = pminute.ToString();
                     cron.Hour = phour.ToString();
                     counter++;
                 }
                 else if (nextterm == "pm")
                 {
+                    cron.Second = "0";
                     cron.Minute = pminute.ToString();
                     cron.Hour = (12 + phour).ToString();
                     counter++;
@@ -71,11 +74,13 @@ namespace norC
 
                 if (nextterm == null || wellKnownTerms.Contains(nextterm) || nextterm == "am")
                 {
+                    cron.Second = "0";
                     cron.Minute = "0";
                     cron.Hour = parsed.ToString();
                 }
                 else if (nextterm == "pm")
                 {
+                    cron.Second = "0";
                     cron.Minute = "0";
                     cron.Hour = (12 + parsed).ToString();
                 }
@@ -98,23 +103,31 @@ namespace norC
 
                 switch (nextterm)
                 {
+                    case "second":
+                    case "seconds":
+                        cron.Second = $"*/{count}";
+                        break;
                     case "minute":
                     case "minutes":
+                        cron.Second = "0";
                         cron.Minute = $"*/{count}";
                         break;
                     case "hour":
                     case "hours":
+                        cron.Second = "0";
                         cron.Minute = "0";
                         cron.Hour = $"*/{count}";
                         break;
                     case "day":
                     case "days":
+                        cron.Second = "0";
                         cron.Minute = "0";
                         cron.Hour = "0";
                         cron.DayOfMonth = $"*/{count}";
                         break;
                     case "month":
                     case "months":
+                        cron.Second = "0";
                         cron.Minute = "0";
                         cron.Hour = "0";
                         cron.DayOfMonth = "1";
@@ -126,20 +139,27 @@ namespace norC
             {
                 switch (nextterm)
                 {
+                    case "second":
+                        cron.Second = "*";
+                        break;
                     case "minute":
+                        cron.Second = "0";
                         cron.Minute = "*";
                         cron.Hour = "*";
                         break;
                     case "hour":
+                        cron.Second = "0";
                         cron.Minute = "0";
                         cron.Hour = "*";
                         break;
                     case "day":
+                        cron.Second = "0";
                         cron.Minute = "0";
                         cron.Hour = "0";
                         cron.DayOfMonth = "*";
                         break;
                     case "month":
+                        cron.Second = "0";
                         cron.Minute = "0";
                         cron.Hour = "0";
                         cron.DayOfMonth = "1";

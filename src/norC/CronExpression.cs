@@ -1,25 +1,44 @@
-﻿namespace norC
+﻿using System.Runtime.Serialization;
+using System.Text;
+
+namespace norC
 {
     public class CronExpression
     {
-        public string Minute { get; set; } = "*";
+        private readonly CronOptions options;
 
-        public string Hour { get; set; } = "*";
+        public string Second { get; internal set; } = "*";
 
-        public string DayOfMonth { get; set; } = "*";
+        public string Minute { get; internal set; } = "*";
 
-        public string Month { get; set; } = "*";
+        public string Hour { get; internal set; } = "*";
 
-        public string DayOfWeek { get; set; } = "*";
+        public string DayOfMonth { get; internal set; } = "*";
+
+        public string Month { get; internal set; } = "*";
+
+        public string DayOfWeek { get; internal set; } = "*";
+
+        public CronExpression(CronOptions options)
+        {
+            this.options = options;
+        }
 
         public override string ToString()
         {
-            return $"{Minute} {Hour} {DayOfMonth} {Month} {DayOfWeek}";
+            var sb = new StringBuilder();
+            if (options.IncludeSeconds)
+            {
+                sb.Append(Second).Append(" ");
+            }
+
+            sb.Append($"{Minute} {Hour} {DayOfMonth} {Month} {DayOfWeek}");
+            return sb.ToString();
         }
 
-        public static CronExpression FromHumanString(string str)
+        public static CronExpression FromHumanString(string str, CronOptions options = null)
         {
-            return Parser.Parse(str);
+            return Parser.Parse(str, options);
         }
     }
 }

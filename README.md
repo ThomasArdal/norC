@@ -22,3 +22,10 @@ Console.WriteLine(cron); // output: 0 15 * * *
 CronExpression cron = "Every month".AsCron();
 Console.WriteLine(cron); // output: 0 0 1 * *
 ```
+
+### Options
+
+```csharp
+CronExpression cron = "Every second".AsCron(new CronOptions { IncludeSeconds = true });
+Console.WriteLine(cron); // output: * * * * * *
+```
